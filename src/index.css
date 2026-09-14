@@ -2,23 +2,19 @@
 @import "tailwindcss";
 
 :root {
-  --bg-dark: #090d16;
-  --bg-card: #111827;
-  --bg-glass: rgba(17, 24, 39, 0.85);
-  --border-glass: rgba(255, 255, 255, 0.12);
-  --border-glow: rgba(59, 130, 246, 0.4);
-  
-  --primary: #3b82f6;
-  --primary-glow: rgba(59, 130, 246, 0.4);
-  --secondary: #6366f1;
-  --accent: #8b5cf6;
-  
-  --success: #10b981;
-  --warning: #f59e0b;
-  --danger: #ef4444;
+  /* Minimalist Black & White / Zinc Palette */
+  --bg-main: #09090b;
+  --bg-card: #18181b;
+  --bg-card-hover: #27272a;
+  --border-light: #27272a;
+  --border-stark: #3f3f46;
 
-  --text-main: #f3f4f6;
-  --text-muted: #9ca3af;
+  --text-main: #fafafa;
+  --text-muted: #a1a1aa;
+  --text-dim: #71717a;
+
+  --accent-black: #000000;
+  --accent-white: #ffffff;
 
   --font-heading: 'Outfit', sans-serif;
   --font-body: 'Plus Jakarta Sans', sans-serif;
@@ -31,15 +27,16 @@
 }
 
 body {
-  background-color: var(--bg-dark);
+  background-color: var(--bg-main);
   color: var(--text-main);
   font-family: var(--font-body);
   min-height: 100vh;
   overflow-x: hidden;
+  /* Minimalist monochrome subtle grid pattern */
   background-image: 
-    radial-gradient(circle at 15% 20%, rgba(59, 130, 246, 0.12) 0%, transparent 40%),
-    radial-gradient(circle at 85% 80%, rgba(139, 92, 246, 0.12) 0%, transparent 40%),
-    radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.06) 0%, transparent 60%);
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
   background-attachment: fixed;
 }
 
@@ -47,49 +44,53 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
 }
 
-/* Custom Component Utility Classes */
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+/* Glass & Card Panels - Clean Black & White Styling */
 .glass-panel {
-  background: rgba(17, 24, 39, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(24, 24, 27, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid #27272a;
   border-radius: 16px;
 }
 
 .glass-panel-interactive {
-  background: rgba(17, 24, 39, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(24, 24, 27, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid #27272a;
   border-radius: 16px;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-panel-interactive:hover {
-  border-color: rgba(59, 130, 246, 0.4);
+  border-color: #52525b;
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.5), 0 0 20px 0 rgba(59, 130, 246, 0.4);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.7);
 }
 
-.glow-text-blue {
-  text-shadow: 0 0 12px rgba(59, 130, 246, 0.5);
-}
-
-.glow-text-green {
-  text-shadow: 0 0 12px rgba(16, 185, 129, 0.5);
-}
-
-.glow-text-red {
-  text-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
-}
-
-/* Dynamic QR Code Box */
+/* Minimalist QR Code Box */
 .qr-container {
   position: relative;
   padding: 24px;
   background: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 0 35px rgba(59, 130, 246, 0.3);
+  border-radius: 16px;
+  border: 2px solid #3f3f46;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.08);
   display: inline-block;
 }
 
@@ -98,9 +99,9 @@ h1, h2, h3, h4, h5, h6 {
   top: 0;
   left: 0;
   right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, transparent, #ef4444, transparent);
-  box-shadow: 0 0 15px #ef4444;
+  height: 3px;
+  background: #ffffff;
+  box-shadow: 0 0 10px #ffffff;
   animation: scan 2.5s ease-in-out infinite alternate;
   border-radius: 2px;
 }
@@ -113,56 +114,56 @@ h1, h2, h3, h4, h5, h6 {
 .watermark-banner {
   background: repeating-linear-gradient(
     -45deg,
-    rgba(239, 68, 68, 0.15),
-    rgba(239, 68, 68, 0.15) 10px,
-    rgba(239, 68, 68, 0.05) 10px,
-    rgba(239, 68, 68, 0.05) 20px
+    rgba(255, 255, 255, 0.08),
+    rgba(255, 255, 255, 0.08) 10px,
+    rgba(255, 255, 255, 0.02) 10px,
+    rgba(255, 255, 255, 0.02) 20px
   );
 }
 
 .pulse-green {
-  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6);
   animation: pulse-green-anim 2s infinite;
 }
 
 @keyframes pulse-green-anim {
-  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.6); }
   70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
   100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
 }
 
 .pulse-red {
-  box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+  box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6);
   animation: pulse-red-anim 1.5s infinite;
 }
 
 @keyframes pulse-red-anim {
-  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.8); }
-  70% { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+  70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
   100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
 }
 
-/* Guard Flash Cards */
+/* Guard Verification Flash Cards */
 .result-modal-pass {
-  background: linear-gradient(180deg, rgba(6, 78, 59, 0.95) 0%, rgba(17, 24, 39, 0.98) 100%);
+  background: #09090b;
   border: 2px solid #10b981;
-  box-shadow: 0 0 50px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 0 40px rgba(16, 185, 129, 0.25);
 }
 
 .result-modal-fail {
-  background: linear-gradient(180deg, rgba(127, 29, 29, 0.95) 0%, rgba(17, 24, 39, 0.98) 100%);
+  background: #09090b;
   border: 2px solid #ef4444;
-  box-shadow: 0 0 50px rgba(239, 68, 68, 0.5);
+  box-shadow: 0 0 40px rgba(239, 68, 68, 0.25);
 }
 
-/* Custom Input Styles */
+/* Custom Input Styles - Minimalist Black & White */
 .custom-input {
   width: 100%;
   padding: 12px 16px;
-  background: rgba(17, 24, 39, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 12px;
-  color: #f3f4f6;
+  background: #09090b;
+  border: 1px solid #27272a;
+  border-radius: 10px;
+  color: #fafafa;
   font-family: var(--font-body);
   font-size: 0.95rem;
   transition: all 0.2s ease;
@@ -170,20 +171,26 @@ h1, h2, h3, h4, h5, h6 {
 
 .custom-input:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+  border-color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+  background: #121215;
 }
 
 .custom-select {
   width: 100%;
   padding: 12px 16px;
-  background: rgba(17, 24, 39, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 12px;
-  color: #f3f4f6;
+  background: #09090b;
+  border: 1px solid #27272a;
+  border-radius: 10px;
+  color: #fafafa;
   font-family: var(--font-body);
   font-size: 0.95rem;
   cursor: pointer;
+}
+
+.custom-select:focus {
+  outline: none;
+  border-color: #ffffff;
 }
 
 .custom-button {
@@ -192,7 +199,7 @@ h1, h2, h3, h4, h5, h6 {
   justify-content: center;
   gap: 8px;
   padding: 12px 20px;
-  border-radius: 12px;
+  border-radius: 10px;
   font-weight: 600;
   font-family: var(--font-heading);
   cursor: pointer;
@@ -201,24 +208,30 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .custom-button-primary {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-  color: #ffffff;
-  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  background: #ffffff;
+  color: #000000;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
 }
 
 .custom-button-primary:hover {
+  background: #e4e4e7;
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.45);
 }
 
 .custom-button-success {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  background: #10b981;
   color: #ffffff;
-  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+.custom-button-success:hover {
+  background: #059669;
 }
 
 .custom-button-danger {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  background: #ef4444;
   color: #ffffff;
-  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+}
+
+.custom-button-danger:hover {
+  background: #dc2626;
 }

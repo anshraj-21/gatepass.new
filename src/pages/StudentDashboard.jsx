@@ -100,37 +100,36 @@ export function StudentDashboard() {
 
   const activeApprovedPass = passes.find(p => p.status === 'APPROVED' || p.status === 'CHECKED_OUT');
   const pendingPasses = passes.filter(p => p.status === 'PENDING');
-  const pastPasses = passes.filter(p => p.status !== 'PENDING' && p.status !== 'APPROVED' && p.status !== 'CHECKED_OUT');
 
   return (
     <div className="max-w-7xl mx-auto px-4 lg:px-8 py-4 space-y-8">
       
-      {/* Student Profile Banner - Blank Avatar Placeholder */}
-      <div className="glass-panel p-6 rounded-2xl border border-white/10 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
+      {/* Student Profile Banner - Minimalist Black & White */}
+      <div className="glass-panel p-6 rounded-2xl border border-zinc-800 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-4 z-10">
           
           {user.avatar ? (
             <img 
               src={user.avatar} 
               alt={user.name} 
-              className="w-20 h-20 rounded-2xl object-cover border-2 border-blue-500/50 shadow-lg shadow-blue-500/20"
+              className="w-20 h-20 rounded-2xl object-cover border-2 border-zinc-700 shadow-md"
             />
           ) : (
-            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-600/40 to-indigo-900/60 border-2 border-blue-500/40 flex items-center justify-center text-blue-300 font-bold text-2xl shadow-lg shadow-blue-500/20">
-              <User className="w-10 h-10 text-blue-400" />
+            <div className="w-20 h-20 rounded-2xl bg-zinc-900 border-2 border-zinc-700 flex items-center justify-center text-zinc-300 font-bold text-2xl shadow-md">
+              <User className="w-10 h-10 text-zinc-300" />
             </div>
           )}
 
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-2xl font-bold text-white">{user.name}</h2>
-              <span className="text-xs px-2.5 py-0.5 rounded-full bg-blue-500/20 text-blue-400 border border-blue-500/30 font-semibold">
+              <span className="text-xs px-2.5 py-0.5 rounded-full bg-zinc-800 text-zinc-300 border border-zinc-700 font-mono font-semibold">
                 {user.rollNo}
               </span>
             </div>
-            <p className="text-sm text-gray-300 mt-1">{user.branch} • {user.year}</p>
-            <p className="text-xs text-gray-400 flex items-center gap-1.5 mt-1">
-              <MapPin className="w-3.5 h-3.5 text-blue-400" />
+            <p className="text-sm text-zinc-300 mt-1">{user.branch} • {user.year}</p>
+            <p className="text-xs text-zinc-400 flex items-center gap-1.5 mt-1">
+              <MapPin className="w-3.5 h-3.5 text-zinc-400" />
               {user.hostelBlock}
             </p>
           </div>
@@ -138,30 +137,28 @@ export function StudentDashboard() {
 
         {/* Location & Apply Button */}
         <div className="flex flex-col sm:flex-row items-center gap-4 z-10 w-full md:w-auto">
-          <div className="bg-gray-900/80 px-4 py-2 rounded-xl border border-emerald-500/30 flex items-center gap-2 text-xs">
+          <div className="bg-zinc-900 px-4 py-2 rounded-xl border border-zinc-800 flex items-center gap-2 text-xs">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            <span className="text-emerald-400 font-semibold">Google Maps Geofence:</span>
-            <span className="text-gray-300">Hostel Main Gate Active</span>
+            <span className="text-zinc-300 font-semibold">Google Maps Geofence:</span>
+            <span className="text-zinc-400">Hostel Main Gate Active</span>
           </div>
 
           <button
             onClick={() => setShowApplyModal(true)}
-            className="w-full sm:w-auto custom-button custom-button-primary shadow-xl shadow-blue-600/30 text-sm py-3 px-6 rounded-xl flex items-center justify-center gap-2"
+            className="w-full sm:w-auto custom-button custom-button-primary shadow-lg text-sm py-3 px-6 rounded-xl flex items-center justify-center gap-2"
           >
-            <PlusCircle className="w-5 h-5" />
+            <PlusCircle className="w-5 h-5 text-black" />
             Apply For Gate Pass
           </button>
         </div>
-
-        <div className="absolute -right-10 -bottom-10 w-60 h-60 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
       </div>
 
       {/* ACTIVE APPROVED PASS DISPLAY */}
       {activeApprovedPass && (
-        <div className="glass-panel p-6 lg:p-8 rounded-3xl border-2 border-emerald-500/40 bg-gradient-to-b from-emerald-950/20 to-gray-900/90 shadow-2xl relative">
-          <div className="flex items-center justify-between mb-6 border-b border-emerald-500/20 pb-4">
+        <div className="glass-panel p-6 lg:p-8 rounded-3xl border-2 border-emerald-500/50 bg-zinc-950 shadow-2xl relative">
+          <div className="flex items-center justify-between mb-6 border-b border-zinc-800 pb-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 border border-emerald-500/30">
+              <div className="w-10 h-10 rounded-xl bg-zinc-900 flex items-center justify-center text-white border border-zinc-800">
                 <QrCode className="w-6 h-6" />
               </div>
               <div>
@@ -171,19 +168,19 @@ export function StudentDashboard() {
                     {activeApprovedPass.status}
                   </span>
                 </h3>
-                <p className="text-xs text-gray-400">Present live dynamic QR code to guard scanner at main gate</p>
+                <p className="text-xs text-zinc-400">Present live dynamic QR code to guard scanner at main gate</p>
               </div>
             </div>
 
             <div className="text-right hidden sm:block">
-              <span className="text-xs text-gray-400 block">Pass Reference ID</span>
-              <span className="font-mono text-sm font-bold text-blue-400">{activeApprovedPass.id}</span>
+              <span className="text-xs text-zinc-400 block">Pass Reference ID</span>
+              <span className="font-mono text-sm font-bold text-white">{activeApprovedPass.id}</span>
             </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             {/* Dynamic Anti-Screenshot QR Code */}
-            <div className="lg:col-span-5 flex flex-col items-center justify-center bg-gray-950/60 p-6 rounded-2xl border border-white/5">
+            <div className="lg:col-span-5 flex flex-col items-center justify-center bg-black p-6 rounded-2xl border border-zinc-800">
               <DynamicQRCode pass={activeApprovedPass} />
             </div>
 
@@ -191,31 +188,31 @@ export function StudentDashboard() {
             <div className="lg:col-span-7 space-y-4">
               
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-gray-900/60 p-3.5 rounded-xl border border-white/5">
-                  <span className="text-xs text-gray-400 block mb-1">Pass Category</span>
+                <div className="bg-zinc-900 p-3.5 rounded-xl border border-zinc-800">
+                  <span className="text-xs text-zinc-400 block mb-1">Pass Category</span>
                   <span className="font-bold text-white text-sm flex items-center gap-1.5">
-                    <FileText className="w-4 h-4 text-blue-400" />
+                    <FileText className="w-4 h-4 text-zinc-300" />
                     {activeApprovedPass.passType}
                   </span>
                 </div>
 
-                <div className="bg-gray-900/60 p-3.5 rounded-xl border border-white/5">
-                  <span className="text-xs text-gray-400 block mb-1">Destination</span>
+                <div className="bg-zinc-900 p-3.5 rounded-xl border border-zinc-800">
+                  <span className="text-xs text-zinc-400 block mb-1">Destination</span>
                   <span className="font-bold text-white text-sm flex items-center gap-1.5">
-                    <MapPin className="w-4 h-4 text-red-400" />
+                    <MapPin className="w-4 h-4 text-zinc-300" />
                     {activeApprovedPass.destination}
                   </span>
                 </div>
 
-                <div className="bg-gray-900/60 p-3.5 rounded-xl border border-white/5">
-                  <span className="text-xs text-gray-400 block mb-1">Departure Schedule</span>
-                  <span className="font-semibold text-gray-200 text-xs">
+                <div className="bg-zinc-900 p-3.5 rounded-xl border border-zinc-800">
+                  <span className="text-xs text-zinc-400 block mb-1">Departure Schedule</span>
+                  <span className="font-semibold text-zinc-200 text-xs">
                     {new Date(activeApprovedPass.departureTime).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}
                   </span>
                 </div>
 
-                <div className="bg-gray-900/60 p-3.5 rounded-xl border border-white/5">
-                  <span className="text-xs text-gray-400 block mb-1">Return Curfew Deadline</span>
+                <div className="bg-zinc-900 p-3.5 rounded-xl border border-zinc-800">
+                  <span className="text-xs text-zinc-400 block mb-1">Return Curfew Deadline</span>
                   <span className="font-bold text-emerald-400 text-xs flex items-center gap-1">
                     <Clock className="w-3.5 h-3.5" />
                     {new Date(activeApprovedPass.expectedReturnTime).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}
@@ -223,22 +220,22 @@ export function StudentDashboard() {
                 </div>
               </div>
 
-              <div className="bg-gray-900/60 p-4 rounded-xl border border-white/5">
-                <span className="text-xs text-gray-400 block mb-1">Stated Reason</span>
-                <p className="text-sm text-gray-200">{activeApprovedPass.reason}</p>
+              <div className="bg-zinc-900 p-4 rounded-xl border border-zinc-800">
+                <span className="text-xs text-zinc-400 block mb-1">Stated Reason</span>
+                <p className="text-sm text-zinc-200">{activeApprovedPass.reason}</p>
               </div>
 
               {activeApprovedPass.wardenApproval && (
-                <div className="bg-purple-950/30 p-4 rounded-xl border border-purple-500/30 flex items-center justify-between">
+                <div className="bg-zinc-900 p-4 rounded-xl border border-zinc-700 flex items-center justify-between">
                   <div className="flex items-center gap-3">
-                    <ShieldCheck className="w-8 h-8 text-purple-400" />
+                    <ShieldCheck className="w-8 h-8 text-zinc-300" />
                     <div>
-                      <span className="text-xs font-bold text-purple-300 block">Digitally Signed by Warden</span>
+                      <span className="text-xs font-bold text-zinc-400 block">Digitally Signed by Warden</span>
                       <span className="text-sm font-semibold text-white">{activeApprovedPass.wardenApproval.wardenName}</span>
-                      <span className="text-[11px] text-gray-400 block mt-0.5">"{activeApprovedPass.wardenApproval.remarks}"</span>
+                      <span className="text-[11px] text-zinc-400 block mt-0.5">"{activeApprovedPass.wardenApproval.remarks}"</span>
                     </div>
                   </div>
-                  <div className="text-right font-mono text-[10px] text-purple-400 bg-purple-900/40 px-2.5 py-1 rounded-md border border-purple-500/20">
+                  <div className="text-right font-mono text-[10px] text-zinc-300 bg-black px-2.5 py-1 rounded-md border border-zinc-800">
                     {activeApprovedPass.wardenApproval.digitalSignature}
                   </div>
                 </div>
@@ -253,33 +250,33 @@ export function StudentDashboard() {
       {pendingPasses.length > 0 && (
         <div className="space-y-4">
           <h3 className="text-lg font-bold text-white flex items-center gap-2">
-            <Clock className="w-5 h-5 text-amber-400" />
+            <Clock className="w-5 h-5 text-zinc-400" />
             Pending Warden Approvals ({pendingPasses.length})
           </h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {pendingPasses.map(pass => (
-              <div key={pass.id} className="glass-panel p-5 rounded-2xl border border-amber-500/30 bg-amber-950/10 space-y-3">
+              <div key={pass.id} className="glass-panel p-5 rounded-2xl border border-zinc-700 bg-zinc-900/90 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-bold text-amber-400 bg-amber-500/20 px-2.5 py-1 rounded-full border border-amber-500/30">
+                  <span className="text-xs font-bold text-zinc-300 bg-zinc-800 px-2.5 py-1 rounded-full border border-zinc-700">
                     ⏳ AWAITING WARDEN SIGNATURE
                   </span>
-                  <span className="text-xs font-mono text-gray-400">{pass.id}</span>
+                  <span className="text-xs font-mono text-zinc-400">{pass.id}</span>
                 </div>
 
                 <div>
                   <h4 className="font-bold text-white text-base">{pass.passType} → {pass.destination}</h4>
-                  <p className="text-xs text-gray-300 mt-1">{pass.reason}</p>
+                  <p className="text-xs text-zinc-300 mt-1">{pass.reason}</p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2 text-xs text-gray-400 bg-gray-900/60 p-2.5 rounded-xl border border-white/5">
+                <div className="grid grid-cols-2 gap-2 text-xs text-zinc-400 bg-black p-2.5 rounded-xl border border-zinc-800">
                   <div>Dep: <strong className="text-white">{new Date(pass.departureTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</strong></div>
                   <div>Ret: <strong className="text-white">{new Date(pass.expectedReturnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</strong></div>
                 </div>
 
                 {pass.aiRiskAnalysis && (
-                  <div className="flex items-center gap-2 text-xs text-purple-300 bg-purple-900/30 p-2 rounded-lg border border-purple-500/20">
-                    <Sparkles className="w-4 h-4 text-purple-400 shrink-0" />
+                  <div className="flex items-center gap-2 text-xs text-zinc-300 bg-black p-2 rounded-lg border border-zinc-800">
+                    <Sparkles className="w-4 h-4 text-white shrink-0" />
                     <span>Gemini AI Safety Score: <strong className="text-white">{pass.aiRiskAnalysis.score} RISK</strong> ({pass.aiRiskAnalysis.confidence}% confidence)</span>
                   </div>
                 )}
@@ -290,15 +287,15 @@ export function StudentDashboard() {
       )}
 
       {/* RECENT PASS HISTORY TABLE */}
-      <div className="glass-panel p-6 rounded-2xl border border-white/10 space-y-4">
+      <div className="glass-panel p-6 rounded-2xl border border-zinc-800 space-y-4">
         <h3 className="text-lg font-bold text-white flex items-center justify-between">
           <span>Gate Pass Request History</span>
-          <span className="text-xs text-gray-400 font-normal">Showing recent 10 records</span>
+          <span className="text-xs text-zinc-400 font-normal">Showing recent records</span>
         </h3>
 
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm text-gray-300">
-            <thead className="bg-gray-900/80 text-xs uppercase text-gray-400 border-b border-white/10">
+          <table className="w-full text-left text-sm text-zinc-300">
+            <thead className="bg-zinc-900 text-xs uppercase text-zinc-400 border-b border-zinc-800">
               <tr>
                 <th className="py-3 px-4">Pass ID</th>
                 <th className="py-3 px-4">Type</th>
@@ -307,23 +304,23 @@ export function StudentDashboard() {
                 <th className="py-3 px-4">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/5">
+            <tbody className="divide-y divide-zinc-800">
               {passes.map(p => (
-                <tr key={p.id} className="hover:bg-white/5 transition-colors">
-                  <td className="py-3 px-4 font-mono text-xs font-semibold text-blue-400">{p.id}</td>
+                <tr key={p.id} className="hover:bg-zinc-900/50 transition-colors">
+                  <td className="py-3 px-4 font-mono text-xs font-semibold text-white">{p.id}</td>
                   <td className="py-3 px-4 font-medium text-white">{p.passType}</td>
-                  <td className="py-3 px-4 text-gray-300">{p.destination}</td>
-                  <td className="py-3 px-4 text-xs text-gray-400">
+                  <td className="py-3 px-4 text-zinc-300">{p.destination}</td>
+                  <td className="py-3 px-4 text-xs text-zinc-400">
                     {new Date(p.departureTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} - {new Date(p.expectedReturnTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                   </td>
                   <td className="py-3 px-4">
                     <span className={`px-2.5 py-1 rounded-full text-xs font-bold ${
                       p.status === 'APPROVED' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' :
-                      p.status === 'CHECKED_OUT' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' :
-                      p.status === 'CHECKED_IN' ? 'bg-gray-500/20 text-gray-300 border border-gray-500/30' :
+                      p.status === 'CHECKED_OUT' ? 'bg-zinc-800 text-zinc-200 border border-zinc-700' :
+                      p.status === 'CHECKED_IN' ? 'bg-zinc-800 text-zinc-400 border border-zinc-700' :
                       p.status === 'OVERDUE' ? 'bg-red-500/20 text-red-400 border border-red-500/30 pulse-red' :
                       p.status === 'REJECTED' ? 'bg-red-500/20 text-red-400 border border-red-500/30' :
-                      'bg-amber-500/20 text-amber-400 border border-amber-500/30'
+                      'bg-zinc-800 text-zinc-300 border border-zinc-700'
                     }`}>
                       {p.status}
                     </span>
@@ -337,17 +334,17 @@ export function StudentDashboard() {
 
       {/* APPLY PASS MODAL */}
       {showApplyModal && (
-        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="glass-panel max-w-lg w-full p-6 lg:p-8 rounded-3xl border border-white/20 shadow-2xl relative space-y-6">
+        <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="glass-panel max-w-lg w-full p-6 lg:p-8 rounded-3xl border border-zinc-700 shadow-2xl relative space-y-6">
             
-            <div className="flex items-center justify-between border-b border-white/10 pb-4">
+            <div className="flex items-center justify-between border-b border-zinc-800 pb-4">
               <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                <Send className="w-5 h-5 text-blue-400" />
+                <Send className="w-5 h-5 text-white" />
                 New Gate Pass Application
               </h3>
               <button 
                 onClick={() => setShowApplyModal(false)}
-                className="text-gray-400 hover:text-white text-lg font-bold"
+                className="text-zinc-400 hover:text-white text-lg font-bold"
               >
                 ✕
               </button>
@@ -356,7 +353,7 @@ export function StudentDashboard() {
             <form onSubmit={handleApplyPass} className="space-y-4">
               
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1.5">Pass Category</label>
+                <label className="block text-xs font-medium text-zinc-300 mb-1.5">Pass Category</label>
                 <select 
                   value={passType} 
                   onChange={e => setPassType(e.target.value)}
@@ -370,7 +367,7 @@ export function StudentDashboard() {
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1.5">Destination Address</label>
+                <label className="block text-xs font-medium text-zinc-300 mb-1.5">Destination Address</label>
                 <input 
                   type="text" 
                   placeholder="e.g. Phoenix Market City, Vasant Kunj, New Delhi"
@@ -383,7 +380,7 @@ export function StudentDashboard() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-gray-300 mb-1.5">Departure Time</label>
+                  <label className="block text-xs font-medium text-zinc-300 mb-1.5">Departure Time</label>
                   <input 
                     type="datetime-local" 
                     value={departureTime}
@@ -393,7 +390,7 @@ export function StudentDashboard() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-300 mb-1.5">Expected Return</label>
+                  <label className="block text-xs font-medium text-zinc-300 mb-1.5">Expected Return</label>
                   <input 
                     type="datetime-local" 
                     value={expectedReturnTime}
@@ -405,7 +402,7 @@ export function StudentDashboard() {
               </div>
 
               <div>
-                <label className="block text-xs font-medium text-gray-300 mb-1.5">Detailed Purpose / Reason</label>
+                <label className="block text-xs font-medium text-zinc-300 mb-1.5">Detailed Purpose / Reason</label>
                 <textarea 
                   rows="3"
                   placeholder="Describe your reason clearly. Gemini AI will evaluate safety & risk parameters for warden approval."
@@ -416,8 +413,8 @@ export function StudentDashboard() {
                 ></textarea>
               </div>
 
-              <div className="bg-purple-950/40 p-3 rounded-xl border border-purple-500/30 flex items-start gap-2 text-xs text-purple-200">
-                <Sparkles className="w-4 h-4 text-purple-400 shrink-0 mt-0.5" />
+              <div className="bg-zinc-900 p-3 rounded-xl border border-zinc-800 flex items-start gap-2 text-xs text-zinc-300">
+                <Sparkles className="w-4 h-4 text-white shrink-0 mt-0.5" />
                 <span>Google Gemini AI will automatically analyze your reason and assign a risk score to assist the Warden's approval process.</span>
               </div>
 
@@ -425,7 +422,7 @@ export function StudentDashboard() {
                 <button
                   type="button"
                   onClick={() => setShowApplyModal(false)}
-                  className="px-4 py-2.5 rounded-xl text-sm font-semibold text-gray-400 hover:text-white"
+                  className="px-4 py-2.5 rounded-xl text-sm font-semibold text-zinc-400 hover:text-white"
                 >
                   Cancel
                 </button>
