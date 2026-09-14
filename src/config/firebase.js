@@ -13,7 +13,6 @@ import {
 } from 'firebase/firestore';
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'firebase/auth';
 
-// Optional Live Firebase credentials (can be supplied via .env)
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyDemoKeyGoogleCloudPlatform_GatePass",
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "hostel-gatepass-demo.firebaseapp.com",
@@ -39,7 +38,7 @@ try {
 }
 
 // -------------------------------------------------------------
-// REACTIVE LOCAL STORE (Simulates Firestore Real-Time Subscriptions)
+// REACTIVE LOCAL STORE (No Sample Pics - Clean Blank Avatars)
 // -------------------------------------------------------------
 
 const INITIAL_PASSES = [
@@ -51,7 +50,7 @@ const INITIAL_PASSES = [
     branch: "Computer Science Engineering",
     year: "3rd Year",
     hostelBlock: "Block A - Room 304",
-    studentPhoto: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=200&auto=format&fit=crop&q=80",
+    studentPhoto: "", // Empty photo - clean default avatar placeholder used
     phone: "+91 98765 43210",
     guardianPhone: "+91 98111 22233",
     passType: "Day Outing",
@@ -59,7 +58,7 @@ const INITIAL_PASSES = [
     departureTime: "2026-09-14T17:30:00",
     expectedReturnTime: "2026-09-14T20:30:00",
     reason: "Purchasing essential academic textbooks & project electronics components.",
-    status: "APPROVED", // PENDING, APPROVED, REJECTED, CHECKED_OUT, CHECKED_IN, OVERDUE
+    status: "APPROVED",
     wardenApproval: {
       wardenName: "Dr. V. K. Gupta",
       approvedAt: "2026-09-14T16:15:00",
@@ -82,7 +81,7 @@ const INITIAL_PASSES = [
     branch: "Electronics & Comm",
     year: "2nd Year",
     hostelBlock: "Girls Hostel B - Room 108",
-    studentPhoto: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80",
+    studentPhoto: "",
     phone: "+91 98234 56789",
     guardianPhone: "+91 98777 88899",
     passType: "Night Out",
@@ -108,7 +107,7 @@ const INITIAL_PASSES = [
     branch: "Mechanical Engg",
     year: "4th Year",
     hostelBlock: "Block C - Room 412",
-    studentPhoto: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
+    studentPhoto: "",
     phone: "+91 97112 33445",
     guardianPhone: "+91 98222 33344",
     passType: "Day Outing",
@@ -134,7 +133,7 @@ const INITIAL_PASSES = [
     branch: "Computer Science",
     year: "3rd Year",
     hostelBlock: "Girls Hostel A - Room 204",
-    studentPhoto: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&auto=format&fit=crop&q=80",
+    studentPhoto: "",
     phone: "+91 99887 76655",
     guardianPhone: "+91 98999 11122",
     passType: "Day Outing",
@@ -169,7 +168,7 @@ const INITIAL_PASSES = [
 
 class ReactiveGatePassStore {
   constructor() {
-    const saved = localStorage.getItem('gcp_gatepass_data_v2');
+    const saved = localStorage.getItem('gcp_gatepass_data_v3');
     if (saved) {
       try {
         this.passes = JSON.parse(saved);
@@ -183,7 +182,7 @@ class ReactiveGatePassStore {
   }
 
   save() {
-    localStorage.setItem('gcp_gatepass_data_v2', JSON.stringify(this.passes));
+    localStorage.setItem('gcp_gatepass_data_v3', JSON.stringify(this.passes));
     this.notify();
   }
 

@@ -36,12 +36,10 @@ export function StudentDashboard() {
 
   useEffect(() => {
     const unsubscribe = reactiveStore.subscribe(data => {
-      // Filter passes for current student or show demo list
       const myPasses = data.filter(p => p.studentId === user.id || p.studentName === user.name);
       setPasses(myPasses.length > 0 ? myPasses : data);
     });
 
-    // Default dates
     const now = new Date();
     const depStr = new Date(now.getTime() + 15 * 60000).toISOString().slice(0, 16);
     const retStr = new Date(now.getTime() + 3 * 3600000).toISOString().slice(0, 16);
@@ -61,7 +59,6 @@ export function StudentDashboard() {
     setIsSubmitting(true);
 
     try {
-      // Analyze request using Gemini AI
       const aiResult = await analyzePassWithGemini({
         studentName: user.name,
         passType,
@@ -78,7 +75,7 @@ export function StudentDashboard() {
         branch: user.branch || "Computer Science",
         year: user.year || "3rd Year",
         hostelBlock: user.hostelBlock || "Block A - Room 304",
-        studentPhoto: user.avatar,
+        studentPhoto: user.avatar || "",
         phone: user.phone,
         guardianPhone: user.guardianPhone,
         passType,
@@ -108,14 +105,22 @@ export function StudentDashboard() {
   return (
     <div className="max-w-7xl mx-auto px-4 lg:px-8 py-4 space-y-8">
       
-      {/* Student Profile & Quick Actions Banner */}
+      {/* Student Profile Banner - Blank Avatar Placeholder */}
       <div className="glass-panel p-6 rounded-2xl border border-white/10 relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-4 z-10">
-          <img 
-            src={user.avatar} 
-            alt={user.name} 
-            className="w-20 h-20 rounded-2xl object-cover border-2 border-blue-500/50 shadow-lg shadow-blue-500/20"
-          />
+          
+          {user.avatar ? (
+            <img 
+              src={user.avatar} 
+              alt={user.name} 
+              className="w-20 h-20 rounded-2xl object-cover border-2 border-blue-500/50 shadow-lg shadow-blue-500/20"
+            />
+          ) : (
+            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-600/40 to-indigo-900/60 border-2 border-blue-500/40 flex items-center justify-center text-blue-300 font-bold text-2xl shadow-lg shadow-blue-500/20">
+              <User className="w-10 h-10 text-blue-400" />
+            </div>
+          )}
+
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-2xl font-bold text-white">{user.name}</h2>
@@ -148,11 +153,10 @@ export function StudentDashboard() {
           </button>
         </div>
 
-        {/* Subtle Decorative Background */}
         <div className="absolute -right-10 -bottom-10 w-60 h-60 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
       </div>
 
-      {/* ACTIVE APPROVED PASS DISPLAY (IF ANY) */}
+      {/* ACTIVE APPROVED PASS DISPLAY */}
       {activeApprovedPass && (
         <div className="glass-panel p-6 lg:p-8 rounded-3xl border-2 border-emerald-500/40 bg-gradient-to-b from-emerald-950/20 to-gray-900/90 shadow-2xl relative">
           <div className="flex items-center justify-between mb-6 border-b border-emerald-500/20 pb-4">
@@ -183,7 +187,7 @@ export function StudentDashboard() {
               <DynamicQRCode pass={activeApprovedPass} />
             </div>
 
-            {/* Pass Details & Warden Seal */}
+            {/* Pass Details */}
             <div className="lg:col-span-7 space-y-4">
               
               <div className="grid grid-cols-2 gap-4">
@@ -219,13 +223,11 @@ export function StudentDashboard() {
                 </div>
               </div>
 
-              {/* Purpose */}
               <div className="bg-gray-900/60 p-4 rounded-xl border border-white/5">
                 <span className="text-xs text-gray-400 block mb-1">Stated Reason</span>
                 <p className="text-sm text-gray-200">{activeApprovedPass.reason}</p>
               </div>
 
-              {/* Warden Digital Approval Stamp */}
               {activeApprovedPass.wardenApproval && (
                 <div className="bg-purple-950/30 p-4 rounded-xl border border-purple-500/30 flex items-center justify-between">
                   <div className="flex items-center gap-3">

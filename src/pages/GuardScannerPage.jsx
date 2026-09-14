@@ -16,7 +16,8 @@ import {
   Volume2, 
   VolumeX,
   Sparkles,
-  QrCode
+  QrCode,
+  User
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -24,14 +25,13 @@ export function GuardScannerPage() {
   const { user } = useAuth();
   const [passes, setPasses] = useState([]);
   const [scanInput, setScanInput] = useState('');
-  const [activeResult, setActiveResult] = useState(null); // { status: 'PASS'|'FAIL', pass: Object, reason?: string }
+  const [activeResult, setActiveResult] = useState(null);
   const [recentEvents, setRecentEvents] = useState([]);
   const [soundEnabled, setSoundEnabled] = useState(true);
 
   useEffect(() => {
     const unsubscribe = reactiveStore.subscribe(data => {
       setPasses(data);
-      // Collect recent gate events
       const events = [];
       data.forEach(p => {
         if (p.gateEvents && p.gateEvents.length > 0) {
@@ -46,7 +46,6 @@ export function GuardScannerPage() {
     return () => unsubscribe();
   }, []);
 
-  // Web Audio Chime synthesizer for immediate audible feedback
   const playSound = (type) => {
     if (!soundEnabled) return;
     try {
@@ -58,8 +57,8 @@ export function GuardScannerPage() {
 
       if (type === 'PASS') {
         osc.type = 'sine';
-        osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
-        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.2); // A5
+        osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.2);
         gain.gain.setValueAtTime(0.3, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
         osc.start();
@@ -82,7 +81,6 @@ export function GuardScannerPage() {
     const queryId = (passIdToScan || scanInput || '').trim().toUpperCase();
     if (!queryId) return;
 
-    // Search pass by ID or student roll number
     const foundPass = passes.find(p => p.id.toUpperCase() === queryId || p.rollNo.toUpperCase() === queryId || p.studentId.toUpperCase() === queryId);
 
     if (!foundPass) {
@@ -94,7 +92,6 @@ export function GuardScannerPage() {
       return;
     }
 
-    // Check pass validity
     if (foundPass.status === 'PENDING') {
       playSound('FAIL');
       setActiveResult({
@@ -151,14 +148,22 @@ export function GuardScannerPage() {
   return (
     <div className="max-w-7xl mx-auto px-4 lg:px-8 py-4 space-y-8">
       
-      {/* Guard Banner */}
+      {/* Guard Banner - Clean Avatar Placeholder */}
       <div className="glass-panel p-6 rounded-2xl border border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-4">
-          <img 
-            src={user.avatar} 
-            alt={user.name} 
-            className="w-16 h-16 rounded-2xl object-cover border-2 border-emerald-500/50 shadow-lg shadow-emerald-500/20"
-          />
+          
+          {user.avatar ? (
+            <img 
+              src={user.avatar} 
+              alt={user.name} 
+              className="w-16 h-16 rounded-2xl object-cover border-2 border-emerald-500/50 shadow-lg shadow-emerald-500/20"
+            />
+          ) : (
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-600/40 to-teal-900/60 border-2 border-emerald-500/40 flex items-center justify-center text-emerald-300 font-bold text-xl shadow-lg shadow-emerald-500/20">
+              <User className="w-8 h-8 text-emerald-400" />
+            </div>
+          )}
+
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-2xl font-bold text-white">{user.name}</h2>
@@ -170,7 +175,6 @@ export function GuardScannerPage() {
           </div>
         </div>
 
-        {/* Audio Toggle & Fast Scanner Buttons */}
         <div className="flex items-center gap-3">
           <button 
             onClick={() => setSoundEnabled(!soundEnabled)}
@@ -201,7 +205,7 @@ export function GuardScannerPage() {
               </span>
             </div>
 
-            {/* Simulated Camera Viewfinder */}
+            {/* Viewfinder */}
             <div className="relative w-full h-56 bg-slate-950 rounded-2xl overflow-hidden border-2 border-emerald-500/40 flex flex-col items-center justify-center group shadow-xl">
               <div className="qr-scan-line"></div>
               
@@ -211,14 +215,13 @@ export function GuardScannerPage() {
               </p>
               <p className="text-[10px] text-gray-500 mt-1">Camera auto-detects 15s rotating security token</p>
 
-              {/* Viewfinder Corner Framing */}
               <div className="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-emerald-400"></div>
               <div className="absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 border-emerald-400"></div>
               <div className="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-emerald-400"></div>
               <div className="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-emerald-400"></div>
             </div>
 
-            {/* Manual Pass ID or Roll Number Lookup */}
+            {/* Manual Lookup */}
             <div className="space-y-3">
               <label className="block text-xs font-semibold text-gray-300">Or Manual Pass ID / Roll Number Lookup:</label>
               
@@ -261,7 +264,7 @@ export function GuardScannerPage() {
 
         </div>
 
-        {/* Right Scan Result Visual Flash Card */}
+        {/* Right Scan Result Card */}
         <div className="lg:col-span-7">
           
           {!activeResult ? (
@@ -272,7 +275,6 @@ export function GuardScannerPage() {
             </div>
           ) : activeResult.status === 'PASS' ? (
             
-            /* SUCCESSFUL AUTHORIZED GATE PASS CARD */
             <div className="result-modal-pass p-8 rounded-3xl space-y-6 relative overflow-hidden animate-fade-in">
               
               <div className="flex items-center justify-between border-b border-emerald-500/40 pb-4">
@@ -288,11 +290,18 @@ export function GuardScannerPage() {
 
               {/* Student Visual Identification */}
               <div className="flex items-center gap-5 bg-black/40 p-4 rounded-2xl border border-emerald-500/30">
-                <img 
-                  src={activeResult.pass.studentPhoto} 
-                  alt={activeResult.pass.studentName} 
-                  className="w-24 h-24 rounded-2xl object-cover border-2 border-emerald-400 shadow-xl"
-                />
+                {activeResult.pass.studentPhoto ? (
+                  <img 
+                    src={activeResult.pass.studentPhoto} 
+                    alt={activeResult.pass.studentName} 
+                    className="w-24 h-24 rounded-2xl object-cover border-2 border-emerald-400 shadow-xl"
+                  />
+                ) : (
+                  <div className="w-24 h-24 rounded-2xl bg-slate-900 border-2 border-emerald-400 flex items-center justify-center text-emerald-400">
+                    <User className="w-12 h-12" />
+                  </div>
+                )}
+
                 <div>
                   <h4 className="text-xl font-bold text-white">{activeResult.pass.studentName}</h4>
                   <p className="text-sm font-semibold text-emerald-300">{activeResult.pass.rollNo} • {activeResult.pass.branch}</p>
@@ -344,7 +353,6 @@ export function GuardScannerPage() {
 
           ) : (
 
-            /* UNAUTHORIZED / REJECTED GATE PASS CARD */
             <div className="result-modal-fail p-8 rounded-3xl space-y-6 relative overflow-hidden animate-fade-in">
               <div className="flex items-center justify-between border-b border-red-500/40 pb-4">
                 <div className="flex items-center gap-3">
@@ -364,7 +372,14 @@ export function GuardScannerPage() {
 
               {activeResult.pass && (
                 <div className="flex items-center gap-4 bg-black/40 p-4 rounded-2xl border border-red-500/20">
-                  <img src={activeResult.pass.studentPhoto} alt="" className="w-16 h-16 rounded-xl object-cover" />
+                  {activeResult.pass.studentPhoto ? (
+                    <img src={activeResult.pass.studentPhoto} alt="" className="w-16 h-16 rounded-xl object-cover" />
+                  ) : (
+                    <div className="w-16 h-16 rounded-xl bg-slate-900 border border-red-500/40 flex items-center justify-center text-red-300 font-bold">
+                      <User className="w-8 h-8" />
+                    </div>
+                  )}
+
                   <div>
                     <h4 className="font-bold text-white">{activeResult.pass.studentName}</h4>
                     <p className="text-xs text-gray-400">{activeResult.pass.rollNo} • {activeResult.pass.hostelBlock}</p>

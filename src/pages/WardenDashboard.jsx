@@ -73,14 +73,22 @@ export function WardenDashboard() {
   return (
     <div className="max-w-7xl mx-auto px-4 lg:px-8 py-4 space-y-8">
       
-      {/* Warden Header Banner */}
+      {/* Warden Header Banner - Clean Avatar Placeholder */}
       <div className="glass-panel p-6 rounded-2xl border border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-4">
-          <img 
-            src={user.avatar} 
-            alt={user.name} 
-            className="w-16 h-16 rounded-2xl object-cover border-2 border-purple-500/50 shadow-lg shadow-purple-500/20"
-          />
+          
+          {user.avatar ? (
+            <img 
+              src={user.avatar} 
+              alt={user.name} 
+              className="w-16 h-16 rounded-2xl object-cover border-2 border-purple-500/50 shadow-lg shadow-purple-500/20"
+            />
+          ) : (
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-600/40 to-indigo-900/60 border-2 border-purple-500/40 flex items-center justify-center text-purple-300 font-bold text-xl shadow-lg shadow-purple-500/20">
+              <User className="w-8 h-8 text-purple-400" />
+            </div>
+          )}
+
           <div>
             <div className="flex items-center gap-2">
               <h2 className="text-2xl font-bold text-white">{user.name}</h2>
@@ -147,11 +155,18 @@ export function WardenDashboard() {
                   {/* Header Student Info */}
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex items-center gap-3">
-                      <img 
-                        src={pass.studentPhoto || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100"} 
-                        alt={pass.studentName} 
-                        className="w-12 h-12 rounded-xl object-cover border border-white/10"
-                      />
+                      {pass.studentPhoto ? (
+                        <img 
+                          src={pass.studentPhoto} 
+                          alt={pass.studentName} 
+                          className="w-12 h-12 rounded-xl object-cover border border-white/10"
+                        />
+                      ) : (
+                        <div className="w-12 h-12 rounded-xl bg-gray-800 border border-white/10 flex items-center justify-center text-gray-300">
+                          <User className="w-6 h-6 text-gray-400" />
+                        </div>
+                      )}
+
                       <div>
                         <h4 className="font-bold text-white text-base">{pass.studentName}</h4>
                         <p className="text-xs text-gray-400">{pass.rollNo} • {pass.hostelBlock}</p>
@@ -255,7 +270,6 @@ export function WardenDashboard() {
           </h3>
 
           <div className="flex items-center gap-3 w-full sm:w-auto">
-            {/* Search Input */}
             <div className="relative w-full sm:w-64">
               <Search className="w-4 h-4 text-gray-400 absolute left-3 top-3" />
               <input 
@@ -267,7 +281,6 @@ export function WardenDashboard() {
               />
             </div>
 
-            {/* Filter Dropdown */}
             <select 
               value={filterStatus} 
               onChange={e => setFilterStatus(e.target.value)}
@@ -300,7 +313,13 @@ export function WardenDashboard() {
                   
                   <td className="py-3 px-4">
                     <div className="flex items-center gap-3">
-                      <img src={p.studentPhoto || "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100"} alt="" className="w-8 h-8 rounded-full object-cover" />
+                      {p.studentPhoto ? (
+                        <img src={p.studentPhoto} alt="" className="w-8 h-8 rounded-full object-cover" />
+                      ) : (
+                        <div className="w-8 h-8 rounded-full bg-gray-800 border border-white/10 flex items-center justify-center text-xs text-gray-400 font-bold">
+                          <User className="w-4 h-4 text-gray-400" />
+                        </div>
+                      )}
                       <div>
                         <span className="font-semibold text-white block text-xs">{p.studentName}</span>
                         <span className="text-[10px] text-gray-400">{p.rollNo} • {p.hostelBlock}</span>
